@@ -15,14 +15,14 @@ format:
 from pathlib import Path
 
 
-def make_project(location: Path, project_name: str):
+def make_project(location: Path, project_name: str, from_inside: bool):
     """create project"""
 
     # define directories
-    project_root = location / project_name
+    project_root = location if from_inside else location / project_name
     src_dir = project_root / "src" / project_name
-    # check if exists
-    if project_root.exists():
+    # check if exists (if from inside, it obviously exists, so don't worry)
+    if project_root.exists() and not from_inside:
         raise Exception(f"{project_root} already exists")
     # create directories
     src_dir.mkdir(parents=True)
