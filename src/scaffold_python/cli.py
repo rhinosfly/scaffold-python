@@ -18,9 +18,12 @@ from scaffold_python import core
 )
 def main(project_name: str, from_inside: bool):
     """scaffold a python project"""
-    core.make_project(
-        location=Path.cwd(), project_name=project_name, from_inside=from_inside
-    )
+    try:
+        core.make_project(
+            location=Path.cwd(), project_name=project_name, from_inside=from_inside
+        )
+    except FileExistsError as err:
+        print(err)
 
 
 if __name__ == "__main__":

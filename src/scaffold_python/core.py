@@ -16,18 +16,26 @@ from pathlib import Path
 
 
 def make_project(location: Path, project_name: str, from_inside: bool):
-    """create project"""
+    """
+    create project\\
+    raises FileExistsError if project directory already exists
+    """
 
-    # define directories
+    # define directories (cwd if from inside)
     project_root = location if from_inside else location / project_name
     src_dir = project_root / "src" / project_name
-    # check if exists (if from inside, it obviously exists, so don't worry)
+
+    # error if it already exists (if from inside,it's supposed to exist so don't worry)
     if project_root.exists() and not from_inside:
-        raise Exception(f"{project_root} already exists")
+        raise FileExistsError(
+            f'Error: project root "{project_name}" already exists at location: "{project_root}"'
+        )
     # create directories
     src_dir.mkdir(parents=True)
 
+    # ===============
     # make root files
+    # ===============
 
     # readme
     readme = project_root / "README.md"
@@ -51,7 +59,9 @@ version = "0.0.1"
 {project_name} = "{project_name}.cli:main\""""
     )
 
+    # ==============
     # make src files
+    # ==============
 
     # core.py
     core = src_dir / "core.py"
