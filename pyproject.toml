@@ -1,0 +1,6 @@
+[project]
+name = "scaffold_python"
+version = "0.0.1"
+
+[project.scripts]
+scaffold_python = "scaffold_python.cli:main"
