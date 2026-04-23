@@ -16,11 +16,15 @@ from scaffold_python import core
     is_flag=True,
     help="current working directory is project root directory",
 )
-def main(project_name: str, from_inside: bool):
+@click.option("--description", "-d", default="project description")
+def main(project_name: str, from_inside: bool, description: str):
     """scaffold a python project"""
     try:
         core.make_project(
-            location=Path.cwd(), project_name=project_name, from_inside=from_inside
+            location=Path.cwd(),
+            project_name=project_name,
+            from_inside=from_inside,
+            description=description,
         )
     except FileExistsError as err:
         print(err)

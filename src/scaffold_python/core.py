@@ -15,7 +15,9 @@ format:
 from pathlib import Path
 
 
-def make_project(location: Path, project_name: str, from_inside: bool):
+def make_project(
+    location: Path, project_name: str, from_inside: bool, description: str
+):
     """
     create project\\
     raises FileExistsError if project directory already exists
@@ -39,7 +41,11 @@ def make_project(location: Path, project_name: str, from_inside: bool):
 
     # readme
     readme = project_root / "README.md"
-    _ = readme.write_text(f"""# {project_name}""")
+    _ = readme.write_text(
+        f"""# {project_name}
+
+{description}"""
+    )
 
     # .gitignore
     gitignore = project_root / ".gitignore"
@@ -54,6 +60,7 @@ def make_project(location: Path, project_name: str, from_inside: bool):
         f"""[project]
 name = "{project_name}"
 version = "0.0.1"
+description = "{description}"
 
 [project.scripts]
 {project_name} = "{project_name}.cli:main\""""
@@ -82,7 +89,7 @@ def main():
 from {project_name} import core
 
 def main():
-    """main function"""
+    """{description}"""
     core.main()
 
 
